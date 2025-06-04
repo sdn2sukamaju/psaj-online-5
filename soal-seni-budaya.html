@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ujian Bahasa Indonesia</title>
+  <title>Ujian Seni Budaya</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -90,7 +90,7 @@
 </head>
 <body>
   <header>
-    <h2>Ujian Bahasa Indonesia</h2>
+    <h2>Ujian Seni Budaya</h2>
     <div class="info-siswa">Nama: <span id="namaSiswa"></span> | NISN: <span id="nisnSiswa"></span></div>
   </header>
   <div class="navigasi-soal" id="navSoal"></div>
@@ -238,7 +238,7 @@
 	  sessionStorage.setItem("rumusNilai", rumus); // ⬅️ simpan rumusnya
 	  sessionStorage.setItem("benar", benar);
 	  sessionStorage.setItem("salah", salah);
-	  sessionStorage.setItem("mapel", "Bahasa Indonesia");
+	  sessionStorage.setItem("mapel", "Seni Budaya");
 
 	  // Kirim ke Apps Script
 	  fetch(scriptURL, {
@@ -248,7 +248,7 @@
 		body: new URLSearchParams({
 		  nama: nama,
 		  nisn: nisn,
-		  mapel: 'Bahasa Indonesia',
+		  mapel: 'Seni Budaya',
 		  benar: benar,
 		  salah: salah,
 		  nilai: nilai
