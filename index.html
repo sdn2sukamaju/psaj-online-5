@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Penilaian Akhir Jenjang Kelas 5 SD Negeri 2 Sukamaju</title>
+  <style>
+    /* ... copy style dari file login kamu ... */
+    body {
+      font-family: Arial, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 50px 10px 40px;
+      background: #fff;
+      color: #b22222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    h1.title {
+      margin: 0 0 25px;
+      text-align: center;
+      user-select: none;
+      max-width: 400px;
+      line-height: 1.2;
+    }
+    h1.title .part1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #777;
+      margin-bottom: 4px;
+    }
+    h1.title .part2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #b22222;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    h1.title .part3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #d34b4b;
+      margin-top: 0;
+    }
+    #container {
+      background: white;
+      border: 3px solid #b22222;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(178, 34, 34, 0.5);
+      width: 320px;
+      padding: 25px 30px 40px;
+      box-sizing: border-box;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 18px;
+      color: #b22222;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      color: #b22222;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px solid #b22222;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      font-family: Arial, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #ff4c4c;
+      background: #fff0f0;
+    }
+    button {
+      margin-top: 22px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      background-color: #b22222;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      font-family: Arial, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    button:hover {
+      background-color: #ff4c4c;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title">
+    <div class="part1">SELAMAT DATANG,</div>
+    <div class="part2">PSAJ - ONLINE</div>
+    <div class="part3" style="margin-bottom: 40px;">
+      <span style="color:#4B0082;">KELAS 5 SEMESTER 2</span><br />
+      <span style="color:#000;">TAHUN PELAJARAN 2024 - 2025</span><br />
+      <span style="color:#d34b4b;">SD NEGERI 2 SUKAMAJU</span>
+    </div>
+  </h1>
+
+  <div id="container">
+    <h2>Silahkan Masuk</h2>
+    <label for="username">Nama:</label>
+    <input type="text" id="username" placeholder="Masukkan nama" autocomplete="off" />
+
+    <label for="password">NISN (Password):</label>
+    <input type="password" id="password" placeholder="Masukkan NISN (10 digit angka)" autocomplete="off" />
+
+    <button onclick="login()">Masuk</button>
+  </div>
+  <div style="margin-top: 40px; text-align: center; font-size: 0.9em; color: gray;">
+		created by herdhianto - sdn 2 sukamaju<br />
+		&copy; 2025
+	</div>
+
+  <script>
+	function login() {
+	  const userName = document.getElementById("username").value.trim();
+	  const userPassword = document.getElementById("password").value.trim();
+
+	  if (!userName || !userPassword) {
+		alert("Mohon isi nama dan NISN dengan benar.");
+		return;
+	  }
+
+	  if (!/^\d{10}$/.test(userPassword)) {
+		alert("NISN harus 10 digit angka.");
+		return;
+	  }
+
+	  const url = "https://script.google.com/macros/s/AKfycbwqiLQNSY2kEpNlIuENzmZmp7MDBZ3uOPwVaatz0-pzbFwq9UoxEubj15I-dI9GJuxr/exec";
+
+	  // Karena Apps Script menerima POST form-urlencoded
+	  const formData = new URLSearchParams();
+	  formData.append('nama', userName);
+	  formData.append('nisn', userPassword);
+	  formData.append('mapel', 'Mulai Ujian');
+
+	  fetch(url, {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: formData.toString(),
+	  })
+	  .then(response => response.text())
+	  .then(text => {
+		if (text.startsWith("OK")) {
+		  sessionStorage.setItem("userName", userName);
+		  sessionStorage.setItem("userPassword", userPassword);
+		  window.location.href = "ujian.html";
+		} else {
+		  alert("Login gagal: " + text);
+		}
+	  })
+	  .catch(error => {
+		alert("Terjadi kesalahan koneksi: " + error.message);
+	  });
+	}
+
+  </script>
+</body>
+</html>
